@@ -1,6 +1,7 @@
 import got from "got"
 
 const API_URL="https://www.rueducommerce.fr/listingDyn?boutique_id=18&langue_id=1&categoriesId=15333&nbImage=2&caracteristiquesValeursId=552298&from=0";
+const PRICE_LIMIT=1650.00;
 
 (async () => {
 	const r = await got(API_URL);
@@ -15,6 +16,7 @@ const API_URL="https://www.rueducommerce.fr/listingDyn?boutique_id=18&langue_id=
 	}else{
 		console.info(`Product${availables.length > 1 ? "s" : ""} found!`);
 		for(const p of availables){
+			if(p.prix_ttc > PRICE_LIMIT) continue;
 			console.log(`${p.fournisseur_nom} - ${p.produit_nom_nom} - ${p.prix_ttc}`);
 			console.log(`https://www.rueducommerce.fr${p.lien}`);
 		}
