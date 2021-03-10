@@ -10,8 +10,12 @@
   "author": "@azerpas",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.860.0",
     "dotenv": "^8.2.0",
     "global-agent": "^2.1.12",
     "got": "^11.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.33"
   }
 }
