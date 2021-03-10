@@ -1,3 +1,5 @@
+import got from "got";
+
 type ProductProps = {
 	productName: string;
 	price: number;
@@ -35,4 +37,10 @@ export const send = async (props: ProductProps) => {
             }
         ]
     }
-}
+	await got.post(process.env.DISCORD || '', {
+		headers: {
+            		'Content-Type': 'application/json',
+        	},
+        	body: JSON.stringify(data),
+	});
+}	
