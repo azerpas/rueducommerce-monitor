@@ -1,3 +1,7 @@
+# Update ⚠️
+
+Quelques heures après ce repo je viens tout juste de chopper ma 3080. **Ce repo ne sera donc plus maintenu**, bon courage à qui passera par ici !
+
 # Hello 👋
 
 Malgré tout mes efforts, je n'ai pas réussi à avoir une RTX 3080 depuis Décembre 2020... 
