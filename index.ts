@@ -1,6 +1,7 @@
 import got from "got"
 import * as dotenv from 'dotenv';
 import 'global-agent/bootstrap';
+import { send } from "./src/discord";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ const PROXY_PASSWORD = process.env.PROXY_PASSWORD;
 		}else{
 			global.GLOBAL_AGENT.HTTP_PROXY = `http://${PROXY_HOST}:${PROXY_PORT}`;
 		}
+		global.GLOBAL_AGENT.NO_PROXY = "discord.com"
 	}
 	const r = await got(API_URL);
 	if(r.statusCode !== 200){
