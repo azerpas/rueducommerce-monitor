@@ -2,6 +2,8 @@ import got from "got"
 import * as dotenv from 'dotenv';
 import 'global-agent/bootstrap';
 import { send } from "./src/discord";
+import { Product } from "./src/types";
+import { updateEnv } from "./src/aws";
 
 dotenv.config();
 
@@ -29,7 +31,7 @@ const PROXY_PASSWORD = process.env.PROXY_PASSWORD;
 	}
 	const js = JSON.parse(r.body);
 	console.info(`Slug ${js.slug}`);
-	const availables = js.produits.filter((p: any) => p.Disponibilite !== 'epuise' && p.shop_name == "Rue du Commerce");
+	const availables: Product[] = js.produits.filter((p: any) => p.Disponibilite !== 'epuise' && p.shop_name == "Rue du Commerce");
 	if(availables.length === 0){
 		console.info("No stock available");
 	}else{
@@ -38,6 +40,20 @@ const PROXY_PASSWORD = process.env.PROXY_PASSWORD;
 			if(p.prix_ttc > PRICE_LIMIT) continue;
 			console.log(`${p.fournisseur_nom} - ${p.produit_nom_nom} - ${p.prix_ttc}`);
 			console.log(`https://www.rueducommerce.fr${p.lien}`);
+			if(process.env.AWS_EXECUTION_ENV){
+				if(process.env.LAST_AT){
+					if(Date.now() - parseInt(process.env.LAST_AT) > 30000){
+						const placeholder = "https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/400px-Wikipedia-logo-v2.svg.png";
+						const t = p.produit_image ? (p.produit_image.length > 0 ? p.produit_image[0].source : placeholder) : placeholder;
+						console.info("Sending webhook");
+						await send({ thumbnail: t, productName: p.produit_nom_nom, price: p.prix_ttc, url: `https://www.rueducommerce.fr${p.lien}`, fournisseur: p.fournisseur_nom, shop: p.shop_name })
+						console.info("Updating envs");
+						await updateEnv();
+					}else{
+						console.info("Too soon to send a notification");
+					}
+				}
+			}
 		}
 	}	
 	process.exit(0);

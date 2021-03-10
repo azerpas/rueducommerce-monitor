@@ -5,8 +5,8 @@ type ProductProps = {
 	price: number;
 	url: string;
 	fournisseur: string;
-	shop: string;
 	thumbnail: string;
+    shop?: string;
 }
 export const send = async (props: ProductProps) => {
 	const { thumbnail, productName, price, url, fournisseur, shop } = props;
@@ -29,7 +29,7 @@ export const send = async (props: ProductProps) => {
                         "name": "Fournisseur","value": fournisseur, "inline": true 
                     },
                     {
-                        "name": "Shop name","value": shop,"inline": true
+                        "name": "Shop name","value": shop || "","inline": true
                     },
                 ],
                 "footer": {  "text": "azerpas" }, "timestamp": new Date().toISOString(),
