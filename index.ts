@@ -12,6 +12,7 @@ const PROXY_USER = process.env.PROXY_USER;
 const PROXY_PASSWORD = process.env.PROXY_PASSWORD;
 
 (async () => {
+	console.log(`Init with env ${process.env.AWS_EXECUTION_ENV ? "AWS": "DEV"}`); //AWS_Lambda_nodejs14.x
 	if(PROXY_HOST && PROXY_PORT){
 		console.log(`Setting proxy at host: ${PROXY_HOST}`);
 		if(PROXY_USER && PROXY_PASSWORD){
