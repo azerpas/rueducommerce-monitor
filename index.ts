@@ -1,6 +1,9 @@
 import got from "got"
+import * as dotenv from 'dotenv';
 
-const API_URL="https://www.rueducommerce.fr/listingDyn?boutique_id=18&langue_id=1&categoriesId=15333&nbImage=2&caracteristiquesValeursId=552298&from=0";
+dotenv.config();
+
+const API_URL=process.env.API_URL || "https://www.rueducommerce.fr/listingDyn?boutique_id=18&langue_id=1&categoriesId=15333&nbImage=2&caracteristiquesValeursId=552298&from=0";
 const PRICE_LIMIT=1650.00;
 
 (async () => {
